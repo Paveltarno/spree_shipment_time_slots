@@ -1,7 +1,9 @@
 SpreeShipmentTimeSlots
 ======================
 
-Introduction goes here.
+Spree shipment time slots extension:
+
+This extension enables easy grouping for orders based on time slots.
 
 Installation
 ------------
