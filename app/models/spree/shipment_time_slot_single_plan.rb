@@ -8,6 +8,9 @@ module Spree
   # starting_at and ending_at methods
   #
   class ShipmentTimeSlotSinglePlan < Spree::Base
+
+    belongs_to :time_slot_day_plan, inverse_of: :shipment_time_slot_single_plans
+
     validates_presence_of :starting_hour
     validates_presence_of :ending_hour
     validates_numericality_of :order_limit, only_integer: true, greater_than: 0

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Spree::ShipmentTimeSlotSinglePlan do
-  before { @plan = create(:aa) }
+  before { @plan = create(:shipment_time_slot_single_plan) }
 
   subject { @plan }
 
@@ -9,6 +9,7 @@ describe Spree::ShipmentTimeSlotSinglePlan do
   it{ should respond_to(:starting_hour) }
   it{ should respond_to(:ending_hour) }
   it{ should respond_to(:order_limit) }
+  it{ should respond_to(:time_slot_day_plan) }
 
   describe "Validations" do
 

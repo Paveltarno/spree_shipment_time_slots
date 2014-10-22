@@ -4,7 +4,7 @@ class CreateSpreeShipmentTimeSlots < ActiveRecord::Migration
       t.datetime :starting_at
       t.datetime :ending_at
       t.integer :order_limit
-      t.references :shipment_time_slot, index: true
+
       t.timestamps
     end
   end

@@ -10,10 +10,14 @@ FactoryGirl.define do
     order_limit 2
   end
 
-  factory :aa, class: Spree::ShipmentTimeSlotSinglePlan do
+  factory :shipment_time_slot_single_plan, class: Spree::ShipmentTimeSlotSinglePlan do
     starting_hour 2.hours
     ending_hour 6.hours
     order_limit 2
+  end
+
+  factory :time_slot_day_plan, class: Spree::TimeSlotDayPlan do
+    sequence(:name)  { |n| "plan#{n}" }
   end
 
 end
