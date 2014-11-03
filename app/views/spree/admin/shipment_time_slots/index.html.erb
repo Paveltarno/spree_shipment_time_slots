@@ -1,0 +1,14 @@
+<% content_for :page_title do %>
+  <%= Spree.t(:shipment_time_slots) %>
+<% end %>
+
+<div id="shipment-time-slots">
+  <h2 id="month">
+    <%= link_to "<", date: @date.prev_month %>
+    <%= @date.strftime("%B %Y") %>
+    <%= link_to ">", date: @date.next_month %>
+  </h2>
+  <%= calendar @date do |date| %>
+    <%= date.day %>
+  <% end %>
+</div>

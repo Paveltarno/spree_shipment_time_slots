@@ -3,3 +3,11 @@ he:
     admin:
       tab:
         time_slots: זמני משלוח
+    shipment_time_slots: זמני משלוח
+    sunday: ראשון
+    monday: שני
+    tuesday: שלישי
+    wednesday: רביעי
+    thursday: חמישי
+    friday: שישי
+    saturday: שבת
