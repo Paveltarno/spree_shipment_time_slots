@@ -69,7 +69,7 @@ describe Spree::TimeSlotDayPlan do
           expect(@day_plan.shipment_time_slot_single_plans.count).to eq 1
         end
 
-        it "should not be valid if alll the nested attributes are destroyed" do
+        it "should not be valid if all the nested attributes are destroyed" do
           params = @day_plan.attributes
           params[:shipment_time_slot_single_plans_attributes] = []
           @day_plan.shipment_time_slot_single_plans.each_with_index do |single_plan, i|

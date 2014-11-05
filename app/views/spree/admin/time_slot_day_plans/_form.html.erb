@@ -14,7 +14,7 @@
     </div>
 
     <div id="new_single_plan_link">
-      <%= button_link_to Spree.t(:add_time_slot), new_admin_shipment_time_slot_single_plan_path, {:remote => true, :icon => 'plus', 'data-update' => 'new_time_slot_day_plan', :id => 'new_time_slot_day_plan_link'} %>
+      <%= link_to_add_nested_fields("add_time_slot", f, "shipment_time_slot_single_plans") %>
     </div>
 
   </div>

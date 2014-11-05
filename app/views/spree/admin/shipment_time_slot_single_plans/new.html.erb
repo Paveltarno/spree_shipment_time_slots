@@ -1,6 +1,0 @@
-<fieldset class="row">
-  <% binding.pry %>
-  <%= fields_for :shipment_time_slot_single_plan, @object, child_index: @object.object_id do |f| %>
-    <%= render 'form', f: f, object: @object %>
-  <% end %>
-</fieldset>
