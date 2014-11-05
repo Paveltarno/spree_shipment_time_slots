@@ -1,0 +1,29 @@
+<div class="aplha four columns">
+  <div class="field checkbox">
+    <%= f.field_container :starting_hour do %>
+      <%= f.label :starting_hour, Spree.t(:starting_hour) %>
+      <%= f.time_select :starting_hour, { minute_step: 30 } %>
+      <%= f.error_message_on :starting_hour %>
+    <% end %>
+  </div>
+</div>
+
+<div class="four columns">
+  <div class="field checkbox">
+    <%= f.field_container :ending_hour do %>
+      <%= f.label :ending_hour, Spree.t(:ending_hour) %>
+      <%= f.time_select :ending_hour, { minute_step: 30 } %>
+      <%= f.error_message_on :ending_hour %>
+    <% end %>
+  </div>
+</div>
+
+<div class="omega four columns">
+  <div class="field">
+    <%= f.field_container :order_limit do %>
+      <%= f.label :order_limit, Spree.t(:order_limit) %>
+      <%= f.number_field :order_limit %>
+      <%= f.error_message_on :order_limit %>
+    <% end %>
+  </div>
+</div>

@@ -8,7 +8,8 @@ module Spree
   # starting_at and ending_at methods
   #
   class ShipmentTimeSlotSinglePlan < Spree::Base
-
+    #TODO: This name is too long
+    
     belongs_to :time_slot_day_plan, inverse_of: :shipment_time_slot_single_plans
 
     validates_presence_of :starting_hour

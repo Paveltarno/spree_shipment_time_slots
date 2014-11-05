@@ -10,14 +10,78 @@ describe Spree::TimeSlotDayPlan do
   it{ should respond_to(:name) }
   it{ should respond_to(:shipment_time_slot_single_plans) }
 
-  describe "dependencies" do
+  describe "associations" do
     it "should destroy associated single plans" do
       single_plan = create(:shipment_time_slot_single_plan)
       @day_plan.shipment_time_slot_single_plans << single_plan
       @day_plan.save!
-      expect(@day_plan.reload.shipment_time_slot_single_plans.count).to eq 1
+      expect(@day_plan.reload.shipment_time_slot_single_plans.count).to eq 2
       @day_plan.destroy!
       expect(Spree::ShipmentTimeSlotSinglePlan.count).to eq 0
+    end
+
+    describe "nested attributes" do
+      let(:params) do
+        { time_slot_day_plan: {
+          name: 'test', shipment_time_slot_single_plans_attributes: [
+            { starting_hour: 1.hour.from_now, ending_hour: 3.hours.from_now, order_limit: 10 },
+            { starting_hour: 4.hour.from_now, ending_hour: 6.hours.from_now, order_limit: 10 },
+            { starting_hour: 7.hour.from_now, ending_hour: 9.hours.from_now, order_limit: 10 },
+          ]
+        }}
+      end
+
+      let(:invalid_params) do
+        { time_slot_day_plan: {
+          name: 'test', shipment_time_slot_single_plans_attributes: [
+            { starting_hour: 1.hour.from_now, ending_hour: 3.hours.from_now, order_limit: 10 },
+            { starting_hour: 4.hour.from_now, ending_hour: 6.hours.from_now, order_limit: 10 },
+            { starting_hour: 7.hour.from_now, ending_hour: 2.hours.from_now, order_limit: 10 },
+          ]
+        }}
+      end
+
+      it "should create single plans" do
+        day_plan = Spree::TimeSlotDayPlan.create!(params[:time_slot_day_plan])
+        expect(day_plan.new_record?).to be_falsey
+        expect(day_plan.shipment_time_slot_single_plans.count).to eq 3
+      end
+
+      it "should fail if one of the plans is invalid" do
+        day_plan = Spree::TimeSlotDayPlan.create(invalid_params[:time_slot_day_plan])
+        expect(day_plan.new_record?).to be_truthy
+        expect(day_plan.shipment_time_slot_single_plans.count).to eq 0
+      end
+
+      describe "allow nested destroy" do
+        before do
+          @single_plan = @day_plan.shipment_time_slot_single_plans.create!(starting_hour: 6.hours.from_now,
+            ending_hour: 8.hours.from_now,
+            order_limit: 20)
+        end
+
+        it "should destroy one of the nested attributes" do
+          params = @day_plan.attributes
+          params[:shipment_time_slot_single_plans_attributes] = [@single_plan.attributes]
+          params[:shipment_time_slot_single_plans_attributes][0][:_destroy] = '1'
+          @day_plan.update!(params)
+          expect(@single_plan).to be_destroyed
+          expect(@day_plan.shipment_time_slot_single_plans.count).to eq 1
+        end
+
+        it "should not be valid if alll the nested attributes are destroyed" do
+          params = @day_plan.attributes
+          params[:shipment_time_slot_single_plans_attributes] = []
+          @day_plan.shipment_time_slot_single_plans.each_with_index do |single_plan, i|
+            params[:shipment_time_slot_single_plans_attributes] << single_plan.attributes
+            params[:shipment_time_slot_single_plans_attributes][i][:_destroy] = '1'
+          end
+          
+          @day_plan.update(params)
+          expect(@day_plan).not_to be_valid
+        end
+      end
+
     end
   end
 
@@ -27,6 +91,5 @@ describe Spree::TimeSlotDayPlan do
       expect(clone).not_to be_valid
     end
   end
-
 
 end

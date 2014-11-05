@@ -14,10 +14,17 @@ FactoryGirl.define do
     starting_hour 2.hours
     ending_hour 6.hours
     order_limit 2
+    time_slot_day_plan nil
   end
 
   factory :time_slot_day_plan, class: Spree::TimeSlotDayPlan do
     sequence(:name)  { |n| "plan#{n}" }
+
+    before(:create) do |day_plan, values|
+      day_plan.shipment_time_slot_single_plans << create_list(:shipment_time_slot_single_plan,
+       1,
+      time_slot_day_plan: day_plan)
+    end
   end
 
 end

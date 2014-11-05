@@ -2,10 +2,12 @@
   <%= Spree.t(:shipment_time_slots) %>
 <% end %>
 
+<%= render :partial => 'spree/admin/shared/shipment_time_slot_sub_menu' %>
+
 <div id="shipment-time-slots">
   <h2 id="month">
     <%= link_to "<", date: @date.prev_month %>
-    <%= @date.strftime("%B %Y") %>
+    <%= "#{Spree.t(@date.strftime("%B").downcase)} #{@date.strftime("%Y")}"%>
     <%= link_to ">", date: @date.next_month %>
   </h2>
   <%= calendar @date do |date| %>

@@ -43,18 +43,18 @@ describe Spree::TimeSlotPlanner do
       it "should return a hash for multiple range given" do
         result = subject.get_day_plans_for_range(Time.zone.today..2.days.from_now)
         expect(result.length).to eq 3
-        result.each{ |k,v| expect(k.is_a?(Date)).to be_true }
+        result.each{ |k,v| expect(k.is_a?(Date)).to be_truthy }
         result.each do |k,v| 
-          expect(v.is_a?(Spree::TimeSlotDayPlan)).to be_true
-          expect(v.name.include?("plan")).to be_true
+          expect(v.is_a?(Spree::TimeSlotDayPlan)).to be_truthy
+          expect(v.name.include?("plan")).to be_truthy
         end
       end
 
       it "should return a hash for single range given" do
         result = subject.get_day_plans_for_range(Time.zone.today..Time.zone.today)
         expect(result.length).to eq 1
-        result.each{ |k,v| expect(k.is_a?(Date)).to be_true }
-        result.each{ |k,v| expect(v.is_a?(Spree::TimeSlotDayPlan)).to be_true }
+        result.each{ |k,v| expect(k.is_a?(Date)).to be_truthy }
+        result.each{ |k,v| expect(v.is_a?(Spree::TimeSlotDayPlan)).to be_truthy }
       end
     end
 
@@ -69,20 +69,20 @@ describe Spree::TimeSlotPlanner do
       it "should return a hash for multiple range given" do
         result = subject.get_day_plans_for_range(2.days.from_now.to_date..4.days.from_now.to_date)
         expect(result.length).to eq 3
-        result.each{ |k,v| expect(k.is_a?(Date)).to be_true }
+        result.each{ |k,v| expect(k.is_a?(Date)).to be_truthy }
         result.each do |k,v| 
-          expect(v.is_a?(Spree::TimeSlotDayPlan)).to be_true
-          expect(v.name.include?("custom")).to be_true
+          expect(v.is_a?(Spree::TimeSlotDayPlan)).to be_truthy
+          expect(v.name.include?("custom")).to be_truthy
         end
       end
 
       it "should return a hash for single range given" do
         result = subject.get_day_plans_for_range(2.days.from_now.to_date..2.days.from_now.to_date)
         expect(result.length).to eq 1
-        result.each{ |k,v| expect(k.is_a?(Date)).to be_true }
+        result.each{ |k,v| expect(k.is_a?(Date)).to be_truthy }
         result.each do |k,v| 
-          expect(v.is_a?(Spree::TimeSlotDayPlan)).to be_true
-          expect(v.name.include?("custom")).to be_true
+          expect(v.is_a?(Spree::TimeSlotDayPlan)).to be_truthy
+          expect(v.name.include?("custom")).to be_truthy
         end
       end
     end
@@ -96,13 +96,13 @@ describe Spree::TimeSlotPlanner do
       it "should return a hash for multiple range given" do
         result = subject.get_day_plans_for_range(2.days.from_now.to_date..4.days.from_now.to_date)
         expect(result.length).to eq 3
-        result.each{ |k,v| expect(k.is_a?(Date)).to be_true }
+        result.each{ |k,v| expect(k.is_a?(Date)).to be_truthy }
         result.each do |k,v| 
-          expect(v.is_a?(Spree::TimeSlotDayPlan)).to be_true
+          expect(v.is_a?(Spree::TimeSlotDayPlan)).to be_truthy
         end
         keys = result.keys
-        expect(result[keys[0]].name.include?("plan")).to be_true
-        expect(result[keys[1]].name.include?("custom")).to be_true
+        expect(result[keys[0]].name.include?("plan")).to be_truthy
+        expect(result[keys[1]].name.include?("custom")).to be_truthy
       end
 
     end

@@ -1,9 +1,22 @@
 he:
+  activerecord:
+    models:
+      spree/time_slot_day_plan:
+        one: תוכנית יומית
+        other: תוכניות יומיות
   spree:
     admin:
       tab:
-        time_slots: זמני משלוח
-    shipment_time_slots: זמני משלוח
+        time_slots_planner: ניהול משלוחים
+        shipment_time_slots: זמינות משלוחים
+        time_slot_day_plans: תוכניות יומיות
+    shipment_time_slots: זמינות משלוחים
+    time_slot_day_plans: תוכניות יומיות
+    new_time_slot_day_plan: תוכנית יומית חדשה
+    add_time_slot: הוסף משבצת זמן
+    starting_hour: שעת התחלה
+    ending_hour: שעת סיום
+    order_limit: כמות הזמנות
     sunday: ראשון
     monday: שני
     tuesday: שלישי
@@ -11,3 +24,15 @@ he:
     thursday: חמישי
     friday: שישי
     saturday: שבת
+    january: ינואר
+    february: פברואר
+    march: מרץ
+    april: אפריל
+    may: מאי
+    june: יוני
+    july: יולי
+    august: אוגוסט
+    september: ספטמבר
+    october: אוקטובר
+    november: נובמבר
+    december: דצמבר

@@ -1,4 +1,4 @@
 <!-- insert_top "[data-hook='admin_tabs']" -->
 <% if can? :admin, Spree::ShipmentTimeSlot %>
-  <%= tab 'time_slots', :label => 'time_slots', :url => admin_shipment_time_slots_path, :icon => 'calendar'  %>
+  <%= tab 'time_slots', :label => 'time_slots_planner', :url => admin_shipment_time_slots_path, :icon => 'calendar'  %>
 <% end %>
