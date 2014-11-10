@@ -10,7 +10,7 @@ class Spree::RegularPlan < ActiveRecord::Base
 
     def day_number_should_be_in_a_week
       unless DAY_NUMBERS.include?(self.day)
-        errors.add(:day, "should be a number between 0 to 6 representing a day of the week")
+        errors.add(:day, Spree.t(:should_be_a_week_number))
       end
     end
 

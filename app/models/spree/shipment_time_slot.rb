@@ -16,7 +16,7 @@ module Spree
       def orders_cannot_be_greater_then_order_limit
         return unless order_limit
         if orders.length > order_limit
-          errors.add(:orders, "can't be greater then the order limit: #{order_limit}")
+          errors.add(:orders, Spree.t(:should_be_smaller_then_order_limit, order_limit: order_limit))
         end
       end
     

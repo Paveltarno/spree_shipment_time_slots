@@ -1,6 +1,11 @@
 Spree.ready ($) ->
-  $('#new_time_slot_day_plan').on 'click', '.add_fields', (event) ->
+  $('.time_slot_day_plan_container').on 'click', '.add_fields', (event) ->
     time = new Date().getTime()
     regexp = new RegExp($(this).data('id'), 'g')
     $(this).before($(this).data('fields').replace(regexp, time))
+    event.preventDefault()
+
+  $('.time_slot_day_plan_container').on 'click', '.remove_fields', (event) ->
+    $(this).prev('input[type=hidden]').val('1')
+    $(this).closest('fieldset').hide()
     event.preventDefault()

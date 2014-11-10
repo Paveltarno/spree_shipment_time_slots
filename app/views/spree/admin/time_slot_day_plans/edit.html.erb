@@ -1,5 +1,5 @@
 <% content_for :page_title do %>
-  <%= Spree.t(:time_slot_day_plans) %>
+  <%= Spree.t(:editing_time_slot_day_plan) %>
 <% end %>
 
 <%= render :partial => 'spree/admin/shared/shipment_time_slot_sub_menu' %>
@@ -10,6 +10,6 @@
 <fieldset data-hook="new_time_slot_day_plan" class="time_slot_day_plan_container">
   <legend align="center"><%= Spree.t(:new_time_slot_day_plan) %></legend>
   <%= render :partial => 'form', :locals => { :f => f } %>
-  <%= render :partial => 'spree/admin/shared/new_resource_links' %>
+  <%= render :partial => 'spree/admin/shared/edit_resource_links' %>
 </fieldset>
 <% end %>

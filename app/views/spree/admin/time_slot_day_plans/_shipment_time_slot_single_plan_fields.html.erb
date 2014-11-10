@@ -1,5 +1,6 @@
 <fieldset class="row">
-  <div class="aplha four columns">
+
+  <div class="alpha four columns">
     <div class="field checkbox">
         <%= f.label :starting_hour, Spree.t(:starting_hour) %>
         <%= f.time_select :starting_hour, { minute_step: 30 } %>
@@ -13,10 +14,18 @@
     </div>
   </div>
 
-  <div class="omega four columns">
-    <div class="field">
+  <div class="four columns">
+    <div class="field checkbox">
         <%= f.label :order_limit, Spree.t(:order_limit) %>
         <%= f.number_field :order_limit %>
     </div>
   </div>
-</div>
+
+  <div class="one columns">
+    <div class="delete-single-plan">
+        <%= f.hidden_field :_destroy %>
+        <%= link_to_with_icon 'trash', Spree.t(:delete), '#', { id: "delete_shipment_single_plan", class: "remove_fields" } %>
+    </div>
+  </div>
+
+</fieldset>

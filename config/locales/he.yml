@@ -4,6 +4,20 @@ he:
       spree/time_slot_day_plan:
         one: תוכנית יומית
         other: תוכניות יומיות
+      spree/shipment_time_slot_single_plan:
+        one: משבצת זמן
+        other: משבצות זמן
+    attributes:
+      spree/time_slot_day_plan:
+        name: שם
+      spree/time_slot_day_plan/shipment_time_slot_single_plans:
+        order_limit: מכסת הזמנות
+        starting_hour: שעת התחלה
+        ending_hour: שעת סיום
+      spree/shipment_time_slot:
+        orders: הזמנות
+        order_limit: מכסת הזמנות
+
   spree:
     admin:
       tab:
@@ -16,7 +30,7 @@ he:
     add_time_slot: הוסף משבצת זמן
     starting_hour: שעת התחלה
     ending_hour: שעת סיום
-    order_limit: כמות הזמנות
+    order_limit: מכסת הזמנות
     sunday: ראשון
     monday: שני
     tuesday: שלישי
@@ -36,3 +50,8 @@ he:
     october: אוקטובר
     november: נובמבר
     december: דצמבר
+    should_be_a_week_number: חייב להיות מספר מ0 עד 6 אשר מייצג יום בשבוע
+    should_be_smaller_then_order_limit: חייב להיות קטן או שווה למכסת ההזמנות %{order_limit}
+    should_be_g_then_starting_hour: לא יכולה להיות קטנה או שווה לשעת ההתחלה
+    should_be_l_then_ending_hour: לא יכולה להיות גדולה או שווה לשעת הסיום
+    editing_time_slot_day_plan: עריכת תוכנית יומית

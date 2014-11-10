@@ -42,7 +42,8 @@ module Spree
       def ending_hour_should_be_greater_then_starting_hour
         return unless ending_hour && starting_hour
         if ending_hour <= starting_hour
-          errors.add(:ending_hour, "can't be equal or less then starting_hour")
+          errors.add(:ending_hour, Spree.t(:should_be_g_then_starting_hour))
+          errors.add(:starting_hour, Spree.t(:should_be_l_then_ending_hour))
         end
       end
 

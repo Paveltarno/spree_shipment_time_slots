@@ -2,11 +2,6 @@ module Spree
   module Admin
     class TimeSlotDayPlansController < ResourceController
 
-      def create
-        binding.pry
-        super.create
-      end
-
       private
 
         def permitted_resource_params
@@ -14,7 +9,7 @@ module Spree
 
           @permitted_resource_params ||= processed_params.
             require('time_slot_day_plan').
-            permit(:name, shipment_time_slot_single_plans_attributes: [:starting_hour, :ending_hour, :order_limit])
+            permit(:name, shipment_time_slot_single_plans_attributes: [:starting_hour, :ending_hour, :order_limit, :_destroy])
 
           return @permitted_resource_params
         end
@@ -27,10 +22,9 @@ module Spree
               
               # Remove the junk keys
               (1..5).each { |i| single_plan.except!("#{k}(#{i}i)") }
-              binding.pry
             end
           end
-          binding.pry
+
           return params
         end
 

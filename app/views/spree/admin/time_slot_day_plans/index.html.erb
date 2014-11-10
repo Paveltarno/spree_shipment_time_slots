@@ -13,10 +13,10 @@
 <%= image_tag 'select2-spinner.gif', :plugin => 'spree', :style => 'display: none', :id => 'busy_indicator' %>
 
 <!-- Placeholder for new day plan forms -->
-<div id="new_time_slot_day_plan"></div>
+<div id="new_time_slot_day_plan" class="time_slot_day_plan_container"></div>
 
 <% if @time_slot_day_plans.any? %>
-<table class="index" id='listing_day_plans' data-hook>
+<table class="index align-center" id='listing_day_plans' data-hook>
   <colgroup>
     <col style="width: 90%">
     <col style="width: 10%">
@@ -29,7 +29,7 @@
   </thead>
   <tbody>
     <% @time_slot_day_plans.each do |time_slot_day_plan| %>
-      <tr id="<%= spree_dom_id day_plan %>" data-hook="day_plans_row" class="<%= cycle('odd', 'even')%>">
+      <tr id="<%= spree_dom_id time_slot_day_plan %>" data-hook="day_plans_row" class="<%= cycle('odd', 'even')%>">
         <td style="padding-left:1em"><%= time_slot_day_plan.name %></td>
         <td class="actions">
           <%= link_to_edit(time_slot_day_plan, :no_text => true, :class => 'admin_edit_time_slot_day_plan') %>
