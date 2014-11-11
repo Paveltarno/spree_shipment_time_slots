@@ -35,7 +35,7 @@
             <%= time_slot_day_plan.name %>
           </b>
           <% time_slot_day_plan.shipment_time_slot_single_plans.each do |plan| %>
-            <%= "| #{plan.starting_hour.to_s(:time)} -> #{plan.ending_hour.to_s(:time)} [#{plan.order_limit}] |" %>
+            <%= "| [#{plan.order_limit}] #{plan.starting_hour.to_s(:time)} -> #{plan.ending_hour.to_s(:time)} " %>
           <% end %>
         </td>
         <td class="actions">
