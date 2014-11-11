@@ -30,7 +30,14 @@
   <tbody>
     <% @time_slot_day_plans.each do |time_slot_day_plan| %>
       <tr id="<%= spree_dom_id time_slot_day_plan %>" data-hook="day_plans_row" class="<%= cycle('odd', 'even')%>">
-        <td style="padding-left:1em"><%= time_slot_day_plan.name %></td>
+        <td style="padding-left:1em">
+          <b>
+            <%= time_slot_day_plan.name %>
+          </b>
+          <% time_slot_day_plan.shipment_time_slot_single_plans.each do |plan| %>
+            <%= "| #{plan.starting_hour.to_s(:time)} -> #{plan.ending_hour.to_s(:time)} [#{plan.order_limit}] |" %>
+          <% end %>
+        </td>
         <td class="actions">
           <%= link_to_edit(time_slot_day_plan, :no_text => true, :class => 'admin_edit_time_slot_day_plan') %>
           <%= link_to_delete(time_slot_day_plan, :no_text => true) %>

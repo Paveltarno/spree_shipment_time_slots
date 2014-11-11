@@ -52,9 +52,9 @@ describe Spree::ShipmentTimeSlotSinglePlan do
   describe ".build_time_slot" do
 
       it "should build a valid time slot" do
-        result = subject.build_time_slot(Time.now.to_date)
-        expected_start_time = Time.zone.now.beginning_of_day + subject.starting_hour
-        expected_end_time = Time.zone.now.beginning_of_day + subject.ending_hour
+        result = subject.build_time_slot(Time.zone.now.to_date)
+        expected_start_time = Time.zone.now.beginning_of_day + subject.starting_hour.hour
+        expected_end_time = Time.zone.now.beginning_of_day + subject.ending_hour.hour
         expect(result.starting_at).to eq expected_start_time
         expect(result.ending_at).to eq expected_end_time
         expect(result.order_limit).to eq subject.order_limit

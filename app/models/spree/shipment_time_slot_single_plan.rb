@@ -31,8 +31,8 @@ module Spree
       raise(ArgumentError, "date must be of ruby type Date") unless date.respond_to?(:beginning_of_day)
 
       return Spree::ShipmentTimeSlot.new(
-        starting_at: date.beginning_of_day + starting_hour,
-        ending_at: date.beginning_of_day + ending_hour,
+        starting_at: date.beginning_of_day + starting_hour.hour,
+        ending_at: date.beginning_of_day + ending_hour.hour,
         order_limit: order_limit
         )
     end
@@ -41,7 +41,7 @@ module Spree
 
       def ending_hour_should_be_greater_then_starting_hour
         return unless ending_hour && starting_hour
-        if ending_hour <= starting_hour
+        if ending_hour.hour <= starting_hour.hour
           errors.add(:ending_hour, Spree.t(:should_be_g_then_starting_hour))
           errors.add(:starting_hour, Spree.t(:should_be_l_then_ending_hour))
         end

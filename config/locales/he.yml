@@ -10,6 +10,7 @@ he:
     attributes:
       spree/time_slot_day_plan:
         name: שם
+        shipment_time_slot_single_plans: משבצות זמן
       spree/time_slot_day_plan/shipment_time_slot_single_plans:
         order_limit: מכסת הזמנות
         starting_hour: שעת התחלה

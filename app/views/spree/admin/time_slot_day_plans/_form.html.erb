@@ -9,7 +9,7 @@
     <!-- placeholder for single plan forms -->
     <div id="time_slot_single_plans" data-hook="time_slot_single_plans">
       <% @time_slot_day_plan.shipment_time_slot_single_plans.each do |single_plan| %>
-        <% id = single_plan.object_id %>
+        <% id = single_plan.id ? single_plan.id : single_plan.object_id %>
         <%= f.fields_for :shipment_time_slot_single_plans, single_plan, child_index: id do |single_plan_fields| %>
           <%= render partial: "shipment_time_slot_single_plan_fields", locals: { f: single_plan_fields } %>
         <% end %>

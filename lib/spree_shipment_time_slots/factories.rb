@@ -11,8 +11,8 @@ FactoryGirl.define do
   end
 
   factory :shipment_time_slot_single_plan, class: Spree::ShipmentTimeSlotSinglePlan do
-    starting_hour 2.hours
-    ending_hour 6.hours
+    starting_hour Time.zone.now.beginning_of_day
+    ending_hour Time.zone.now.beginning_of_day + 7.hours
     order_limit 2
     time_slot_day_plan nil
   end
