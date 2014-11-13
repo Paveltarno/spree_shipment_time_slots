@@ -1,10 +1,10 @@
 <% content_for :page_title do %>
-  <%= Spree.t(:shipment_time_slots) %>
+  <%= Spree.t(:weekly_plan) %>
 <% end %>
 
 <%= render :partial => 'spree/admin/shared/shipment_time_slot_sub_menu' %>
 
-<div id="shipment-time-slots">
+<div id="custom-plan-set">
   <h2 id="month">
     <%= link_to "<", date: @date.prev_month %>
     <%= "#{Spree.t(@date.strftime("%B").downcase)} #{@date.strftime("%Y")}"%>

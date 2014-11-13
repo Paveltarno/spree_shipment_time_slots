@@ -1,4 +1,5 @@
-#shipment-time-slots .calendar, #week-regular-plans .calendar {
+// TODO: Sort the id mess
+#shipment-time-slots .calendar, #week-regular-plans .calendar, #custom-plan-set .calendar {
   border-collapse: collapse;
   width: 100%;
 
@@ -9,7 +10,7 @@
   }
 
   th {
-    background: lighten(#9fc820, 10%);
+    background: lighten(#9fc820, 25%);
     color: #666;
     text-align: center;
     width: 14.2857142857143%;
@@ -27,7 +28,7 @@
   .today { background-color: #D7F2FF; }
 }
 
-#shipment-time-slots #month {
+#shipment-time-slots #month, #custom-plan-set #month {
   margin: 0;
   padding-bottom: 10px;
   text-align: center;

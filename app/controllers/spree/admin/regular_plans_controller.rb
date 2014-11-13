@@ -12,10 +12,8 @@ module Spree
         errors = []
         @regular_plans.values.each do |plan|
           plan.time_slot_day_plan_id = regular_plans_params[plan.id.to_s][:time_slot_day_plan_id]
-          binding.pry
           errors << plan unless plan.save
         end
-        binding.pry
         if errors.empty?
           flash[:success] = Spree.t(:weekly_plan_successfully_updated)
           redirect_to admin_regular_plans_url
