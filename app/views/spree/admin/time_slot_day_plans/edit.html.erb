@@ -7,9 +7,9 @@
 <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @time_slot_day_plan } %>
 
 <%= form_for [:admin, @time_slot_day_plan] do |f| %>
-<fieldset data-hook="new_time_slot_day_plan" class="time_slot_day_plan_container">
-  <legend align="center"><%= Spree.t(:new_time_slot_day_plan) %></legend>
-  <%= render :partial => 'form', :locals => { :f => f } %>
-  <%= render :partial => 'spree/admin/shared/edit_resource_links' %>
-</fieldset>
+  <fieldset data-hook="new_time_slot_day_plan" class="time_slot_day_plan_container">
+    <legend align="center"><%= Spree.t(:new_time_slot_day_plan) %></legend>
+    <%= render :partial => 'form', :locals => { :f => f } %>
+    <%= render :partial => 'spree/admin/shared/edit_resource_links' %>
+  </fieldset>
 <% end %>

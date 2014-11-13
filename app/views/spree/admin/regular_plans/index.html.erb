@@ -1,0 +1,24 @@
+<% content_for :page_title do %>
+  <%= Spree.t(:weekly_plan) %>
+<% end %>
+
+<%= render :partial => 'spree/admin/shared/shipment_time_slot_sub_menu' %>
+
+<%= form_tag admin_regular_plans_path do |f| %>
+  <div id="week-regular-plans">
+
+    <%= week_calendar do |day| %>
+      <div class="align-center">
+        <b> <%= Spree.t(:time_slot_day_plan) + ":" %><b>
+        <%= fields_for "regular_plans[]", @regular_plans[day] do |ff| %>
+          <%= ff.collection_select( :time_slot_day_plan_id, Spree::TimeSlotDayPlan.all, :id, :name, {include_blank: Spree.t(:empty) } ) %>
+        <% end %>
+      </div>
+    <% end %>
+
+    <div class="form-buttons filter-actions actions" data-hook="buttons">
+      <%= button Spree.t('actions.update'), 'refresh' %>
+    </div>
+
+  </div>
+<% end %>

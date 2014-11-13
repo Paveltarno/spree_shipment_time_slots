@@ -14,6 +14,10 @@ module SpreeShipmentTimeSlots
         inject_into_file 'vendor/assets/stylesheets/spree/backend/all.css', " *= require spree/backend/spree_shipment_time_slots\n", :before => /\*\//, :verbose => true
       end
 
+      def add_seed
+        append_file 'db/seeds.rb', "SpreeShipmentTimeSlots::Engine.load_seed if defined?(SpreeDoorstepManager)\n"
+      end
+
       def add_migrations
         run 'bundle exec rake railties:install:migrations FROM=spree_shipment_time_slots'
       end

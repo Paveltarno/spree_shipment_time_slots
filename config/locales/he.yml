@@ -18,15 +18,18 @@ he:
       spree/shipment_time_slot:
         orders: הזמנות
         order_limit: מכסת הזמנות
-
   spree:
     admin:
       tab:
         time_slots_planner: ניהול משלוחים
         shipment_time_slots: זמינות משלוחים
         time_slot_day_plans: תוכניות יומיות
+        weekly_plan: תכנון שבועי
+    weekly_plan: תכנון שבועי
+    weekly_plan_successfully_updated: תוכנית שבועית עודכנה בהצלחה
     shipment_time_slots: זמינות משלוחים
     time_slot_day_plans: תוכניות יומיות
+    time_slot_day_plan: תוכנית יומית
     new_time_slot_day_plan: תוכנית יומית חדשה
     add_time_slot: הוסף משבצת זמן
     starting_hour: שעת התחלה
