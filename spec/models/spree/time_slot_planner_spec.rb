@@ -108,5 +108,52 @@ describe Spree::TimeSlotPlanner do
     end
   end
 
+  describe ".get_time_slots_for_next" do
+    describe "mixed plans" do
+      before do
+        Spree::CustomPlan.create!(date: 1.day.from_now,
+          time_slot_day_plan: create(:time_slot_day_plan, name:"custom"))
+      end
+
+      it "should return time slots" do
+        result = subject.get_time_slots_for_next(2)
+        expect(result.length).to eq 3
+        result.each do |i|
+          expect(i.class).to eq Spree::ShipmentTimeSlot
+        end
+      end
+
+      it "should filter full time slots" do
+        time_slot = create(:shipment_time_slot, order_limit: 1)
+        time_slot.orders << create(:order)
+        time_slot.save!
+        full_plan = Spree::CustomPlan.create!(date: Date.today,
+          time_slot_day_plan: create(:time_slot_day_plan, name:"custom2"))
+
+        result = subject.get_time_slots_for_next(2)
+        expect(result.length).to eq 2
+        result.each do |i|
+          expect(i.class).to eq Spree::ShipmentTimeSlot
+        end
+      end
+
+      it "should not filter full time slots if specified" do
+        time_slot = create(:shipment_time_slot, order_limit: 1)
+        time_slot.orders << create(:order)
+        time_slot.save!
+        full_plan = Spree::CustomPlan.create!(date: Date.today,
+          time_slot_day_plan: create(:time_slot_day_plan, name:"custom2"))
+
+        result = subject.get_time_slots_for_next(2, false)
+        binding.pry
+        expect(result.length).to eq 3
+        result.each do |i|
+          expect(i.class).to eq Spree::ShipmentTimeSlot
+        end
+      end
+
+    end
+  end
+
 
 end

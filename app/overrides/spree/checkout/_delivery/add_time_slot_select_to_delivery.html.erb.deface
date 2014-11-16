@@ -1,0 +1,4 @@
+<!-- insert_after "[data-hook='stock-contents']" -->
+<h4 class="shipment-time-slot" data-hook="shipment-time-slot"></h4>
+<%= ship_form.collection_select( :shipment_time_slot_id,
+ Spree::TimeSlotPlanner.get_time_slots_for_next(Spree::ShipmentTimeSlotsConfiguration.user_day_limit)) %>

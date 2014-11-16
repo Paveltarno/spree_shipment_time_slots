@@ -37,6 +37,23 @@ module Spree
         )
     end
 
+    #
+    # If a ShipmentTimeSlot object already exists for this plan
+    # it willl be fetched, if not, a new one will be created but not pesisted
+    # @param [Date] date Any specific date object that responds to beginning_of_day 
+    #
+    # @return [ShipmentTimeSlot] ShipmentTimeSlot object
+    # 
+    def get_or_build_time_slot(date)
+
+      # Query for the time slot
+      time_slot = Spree::ShipmentTimeSlot.where(starting_at: date.beginning_of_day + starting_hour.hour.hour,
+        ending_at: date.beginning_of_day + ending_hour.hour.hour).first
+
+      # If no time slot found, return a new one
+      time_slot ? time_slot : build_time_slot(date)
+    end
+
     private
 
       def ending_hour_should_be_greater_then_starting_hour

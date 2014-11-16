@@ -4,9 +4,15 @@ module SpreeShipmentTimeSlots
     isolate_namespace Spree
     engine_name 'spree_shipment_time_slots'
 
+    config.autoload_paths += %W(#{config.root}/lib)
+
     # use rspec for tests
     config.generators do |g|
       g.test_framework :rspec
+    end
+
+    initializer "spree.spree_shipment_time_slots.preferences", :after => "spree.environment" do |app|
+      Spree::ShipmentTimeSlotsConfiguration = Spree::SpreeShipmentTimeSlotsConfiguration.new
     end
 
     def self.activate

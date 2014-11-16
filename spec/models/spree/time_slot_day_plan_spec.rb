@@ -24,9 +24,9 @@ describe Spree::TimeSlotDayPlan do
       let(:params) do
         { time_slot_day_plan: {
           name: 'test', shipment_time_slot_single_plans_attributes: [
-            { starting_hour: 1.hour.from_now, ending_hour: 3.hours.from_now, order_limit: 10 },
-            { starting_hour: 4.hour.from_now, ending_hour: 6.hours.from_now, order_limit: 10 },
-            { starting_hour: 7.hour.from_now, ending_hour: 9.hours.from_now, order_limit: 10 },
+            { starting_hour: Date.today + 1.hour, ending_hour: Date.today + 3.hours, order_limit: 10 },
+            { starting_hour: Date.today + 4.hour, ending_hour: Date.today + 6.hours, order_limit: 10 },
+            { starting_hour: Date.today + 7.hour, ending_hour: Date.today + 9.hours, order_limit: 10 },
           ]
         }}
       end
@@ -34,9 +34,9 @@ describe Spree::TimeSlotDayPlan do
       let(:invalid_params) do
         { time_slot_day_plan: {
           name: 'test', shipment_time_slot_single_plans_attributes: [
-            { starting_hour: 1.hour.from_now, ending_hour: 3.hours.from_now, order_limit: 10 },
-            { starting_hour: 4.hour.from_now, ending_hour: 6.hours.from_now, order_limit: 10 },
-            { starting_hour: 7.hour.from_now, ending_hour: 2.hours.from_now, order_limit: 10 },
+            { starting_hour: Date.today + 1.hour, ending_hour: Date.today + 3.hours, order_limit: 10 },
+            { starting_hour: Date.today + 4.hour, ending_hour: Date.today + 6.hours, order_limit: 10 },
+            { starting_hour: Date.today + 7.hour, ending_hour: Date.today + 2.hours, order_limit: 10 },
           ]
         }}
       end
@@ -55,8 +55,8 @@ describe Spree::TimeSlotDayPlan do
 
       describe "allow nested destroy" do
         before do
-          @single_plan = @day_plan.shipment_time_slot_single_plans.create!(starting_hour: 6.hours.from_now,
-            ending_hour: 8.hours.from_now,
+          @single_plan = @day_plan.shipment_time_slot_single_plans.create!(starting_hour: Date.today + 6.hours,
+            ending_hour: Date.today + 8.hours,
             order_limit: 20)
         end
 

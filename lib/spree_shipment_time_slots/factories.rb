@@ -5,8 +5,8 @@ FactoryGirl.define do
   # require 'spree_shipment_time_slots/factories'
 
   factory :shipment_time_slot, class: Spree::ShipmentTimeSlot do
-    starting_at Time.zone.now
-    ending_at 7.hours.from_now
+    starting_at Time.zone.now.beginning_of_day
+    ending_at Time.zone.now.beginning_of_day + 7.hours
     order_limit 2
   end
 
@@ -18,7 +18,7 @@ FactoryGirl.define do
   end
 
   factory :time_slot_day_plan, class: Spree::TimeSlotDayPlan do
-    sequence(:name)  { |n| "plan#{n}" }
+    sequence(:name)  { |n| "regular_plan#{n}" }
 
     before(:create) do |day_plan, values|
       day_plan.shipment_time_slot_single_plans << create_list(:shipment_time_slot_single_plan,

@@ -10,6 +10,14 @@ module Spree
     validates_numericality_of :order_limit, only_integer: true, greater_then: 0
     validate :orders_cannot_be_greater_then_order_limit
 
+    def full?
+      orders.length == order_limit
+    end
+
+    def to_s
+      "#{starting_at} - #{ending_at}"
+    end
+
     private
 
       # Custom validators

@@ -25,7 +25,7 @@ module Spree
       # Create date range
       dates = Time.zone.today..days.days.from_now.to_date
 
-      self.get_day_plans_for_range(dates)
+      get_day_plans_for_range(dates)
     end
 
     #
@@ -64,6 +64,52 @@ module Spree
       return day_plans
 
     end
+
+    def self.get_time_slots_for_next(days = 0, filter_full = true)
+      day_plans = get_day_plans_for_next(days)
+      get_time_slots_from_plans(day_plans, filter_full)
+    end
+
+    def self.get_time_slots_for_range(dates, filter_full = true)
+      day_plans = get_time_slots_for_range(dates)
+      get_time_slots_from_plans(day_plans, filter_full)
+    end
+
+    #
+    # Creates or gets existing ShipmentTimeSlot objects
+    #
+    # @param [ShipmentTimeSlotDayPlan] plans Day plans
+    # @param [bool] filter_full Filter time slots which reached their order limit
+    #
+    # @return [<type>] <description>
+    # 
+    def self.get_time_slots_from_plans(plans, filter_full = true)
+      time_slots = []
+
+      # Iterate over the day plans
+      plans.each do |date, day_plan|
+
+        # Iterate over each single plan
+        day_plan.shipment_time_slot_single_plans.each do |single_plan|
+
+          # Get the time slot object from the single plan
+          time_slot = single_plan.get_or_build_time_slot(date)
+
+          # Filter full time slots
+          time_slots << time_slot unless filter_full && time_slot.full?
+
+        end
+      end
+      
+      # Persist time slots
+      time_slots.each { |time_slot| time_slot.save! if time_slot.new_record? }
+
+      return time_slots
+
+    end
+
+    private_class_method :get_time_slots_from_plans
+
 
   end
 end
