@@ -25,7 +25,8 @@
   }
 
   .notmonth, .notmonth a { color: #CCC; }
-  .today { background-color: #D7F2FF; }
+  .present { background-color: #9fc820; }
+  .today { border: 3px solid red }
 }
 
 #shipment-time-slots #month, #custom-plan-set #month {

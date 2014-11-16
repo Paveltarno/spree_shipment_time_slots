@@ -25,10 +25,11 @@ he:
         shipment_time_slots: זמינות משלוחים
         time_slot_day_plans: תוכניות יומיות
         weekly_plan: תכנון שבועי
-        custom_plans: תוכניות מיוחדים
+        custom_plans: תוכניות מיוחדות
     custom_plans: תוכניות מיוחדות
     weekly_plan: תכנון שבועי
     weekly_plan_successfully_updated: תוכנית שבועית עודכנה בהצלחה
+    custom_plan_set_successfully_updated: לו״ז תוכניות מיוחדות עודכן בהצלחה
     shipment_time_slots: זמינות משלוחים
     time_slot_day_plans: תוכניות יומיות
     time_slot_day_plan: תוכנית יומית

@@ -1,16 +1,36 @@
 <% content_for :page_title do %>
-  <%= Spree.t(:weekly_plan) %>
+  <%= Spree.t(:custom_plans) %>
 <% end %>
 
 <%= render :partial => 'spree/admin/shared/shipment_time_slot_sub_menu' %>
 
-<div id="custom-plan-set">
-  <h2 id="month">
-    <%= link_to "<", date: @date.prev_month %>
-    <%= "#{Spree.t(@date.strftime("%B").downcase)} #{@date.strftime("%Y")}"%>
-    <%= link_to ">", date: @date.next_month %>
-  </h2>
-  <%= calendar @date do |date| %>
-    <%= date.day %>
-  <% end %>
-</div>
+<%= form_for @plan_set, url: admin_custom_plans_path do |f| %>
+  <div id="custom-plan-set">
+    <h2 id="month">
+      <%= link_to "<", date: @date.prev_month %>
+      <%= f.hidden_field(:date, value: @date) %>
+      <%= "#{Spree.t(@date.strftime("%B").downcase)} #{@date.strftime("%Y")}"%>
+      <%= link_to ">", date: @date.next_month %>
+    </h2>
+    <%= calendar @date do |date| %>
+      <%= date.day %>
+
+      <div class="align-center">
+        <% if date.month == @date.month %>
+          <b> <%= Spree.t(:time_slot_day_plan) + ":" %></b>
+            <% curr_plan = @plan_set.custom_plans_by_date[date] %>
+            <%= f.fields_for "custom_plans[#{date}]", curr_plan do |ff| %>
+              <% day_plans = Spree::TimeSlotDayPlan.all %>
+              <%= ff.hidden_field(:date, value: date) %>
+              <%= ff.collection_select( :time_slot_day_plan_id, day_plans, :id, :name, {include_blank: Spree.t(:empty) }, {class: "day-plan-select"} ) %>
+            <% end %>
+          <% end %>
+      </div>
+
+    <% end %>
+  </div>
+
+  <div class="form-buttons filter-actions actions" data-hook="buttons">
+    <%= button Spree.t('actions.update'), 'refresh' %>
+  </div>
+<% end %>
