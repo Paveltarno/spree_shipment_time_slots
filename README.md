@@ -5,6 +5,12 @@ Spree shipment time slots extension:
 
 This extension enables easy grouping for orders based on time slots.
 
+Notes
+-----
+- English locale file needed
+- Only works with checkout confirmation step enabled 
+  (otherwise user won't be able to select a time slot)
+
 Installation
 ------------
 

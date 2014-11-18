@@ -3,6 +3,7 @@ module SpreeShipmentTimeSlots
     class InstallGenerator < Rails::Generators::Base
 
       class_option :auto_run_migrations, :type => :boolean, :default => false
+      source_root File.expand_path("../initializers", __FILE__)
 
       def add_javascripts
         append_file 'vendor/assets/javascripts/spree/frontend/all.js', "//= require spree/frontend/spree_shipment_time_slots\n"
@@ -12,6 +13,10 @@ module SpreeShipmentTimeSlots
       def add_stylesheets
         inject_into_file 'vendor/assets/stylesheets/spree/frontend/all.css', " *= require spree/frontend/spree_shipment_time_slots\n", :before => /\*\//, :verbose => true
         inject_into_file 'vendor/assets/stylesheets/spree/backend/all.css', " *= require spree/backend/spree_shipment_time_slots\n", :before => /\*\//, :verbose => true
+      end
+
+      def add_initializers
+        copy_file 'shipment_time_slots.rb', 'config/initializers/shipment_time_slots.rb'
       end
 
       def add_seed

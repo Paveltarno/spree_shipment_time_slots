@@ -26,6 +26,7 @@ he:
         time_slot_day_plans: תוכניות יומיות
         weekly_plan: תכנון שבועי
         custom_plans: תוכניות מיוחדות
+    shipment_time: זמן משלוח
     custom_plans: תוכניות מיוחדות
     weekly_plan: תכנון שבועי
     weekly_plan_successfully_updated: תוכנית שבועית עודכנה בהצלחה

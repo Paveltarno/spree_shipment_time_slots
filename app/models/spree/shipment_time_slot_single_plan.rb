@@ -29,10 +29,10 @@ module Spree
 
       # Validate
       raise(ArgumentError, "date must be of ruby type Date") unless date.respond_to?(:beginning_of_day)
-
+      
       return Spree::ShipmentTimeSlot.new(
-        starting_at: date.beginning_of_day + starting_hour.hour,
-        ending_at: date.beginning_of_day + ending_hour.hour,
+        starting_at: date.beginning_of_day + starting_hour.hour.hour,
+        ending_at: date.beginning_of_day + ending_hour.hour.hour,
         order_limit: order_limit
         )
     end

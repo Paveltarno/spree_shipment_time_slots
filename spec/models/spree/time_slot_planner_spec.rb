@@ -125,7 +125,7 @@ describe Spree::TimeSlotPlanner do
 
       it "should filter full time slots" do
         time_slot = create(:shipment_time_slot, order_limit: 1)
-        time_slot.orders << create(:order)
+        time_slot.shipments << create(:shipment)
         time_slot.save!
         full_plan = Spree::CustomPlan.create!(date: Date.today,
           time_slot_day_plan: create(:time_slot_day_plan, name:"custom2"))
@@ -139,13 +139,13 @@ describe Spree::TimeSlotPlanner do
 
       it "should not filter full time slots if specified" do
         time_slot = create(:shipment_time_slot, order_limit: 1)
-        time_slot.orders << create(:order)
+        time_slot.shipments << create(:shipment)
         time_slot.save!
         full_plan = Spree::CustomPlan.create!(date: Date.today,
           time_slot_day_plan: create(:time_slot_day_plan, name:"custom2"))
 
         result = subject.get_time_slots_for_next(2, false)
-        binding.pry
+
         expect(result.length).to eq 3
         result.each do |i|
           expect(i.class).to eq Spree::ShipmentTimeSlot

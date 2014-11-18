@@ -11,10 +11,6 @@ module SpreeShipmentTimeSlots
       g.test_framework :rspec
     end
 
-    initializer "spree.spree_shipment_time_slots.preferences", :after => "spree.environment" do |app|
-      Spree::ShipmentTimeSlotsConfiguration = Spree::SpreeShipmentTimeSlotsConfiguration.new
-    end
-
     def self.activate
       Dir.glob(File.join(File.dirname(__FILE__), '../../app/**/*_decorator*.rb')) do |c|
         Rails.configuration.cache_classes ? require(c) : load(c)
