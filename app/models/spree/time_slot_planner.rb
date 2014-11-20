@@ -39,11 +39,18 @@ module Spree
       # Check params
       dates = dates.to_a
 
-      # Create a hash will all the dates as keys and all the regular plans
-      # as their values
-      day_plans = dates.inject({}) do |hash, date|
-        hash[date] = regular_plans.where(day: date.wday).first.time_slot_day_plan
-        hash
+      day_plans = {}
+
+      # If there are any regular plans (should be from seed but we cant rely on that)
+      if regular_plans.count > 0
+        # Create a hash will all the dates as keys and all the regular plans
+        # as their values
+        day_plans = dates.inject({}) do |hash, date|
+
+          day_plan = regular_plans.where(day: date.wday).first.time_slot_day_plan
+          hash[date] = day_plan if day_plan
+          hash
+        end
       end
 
       # Fetch the needed custom plans
@@ -65,38 +72,49 @@ module Spree
 
     end
 
-    def self.get_time_slots_for_next(days = 0, filter_full = true)
+    def self.get_time_slots_for_next(days = 0, options = {})
       day_plans = get_day_plans_for_next(days)
-      get_time_slots_from_plans(day_plans, filter_full)
+      get_time_slots_from_plans(day_plans, options)
     end
 
-    def self.get_time_slots_for_range(dates, filter_full = true)
+    def self.get_time_slots_for_range(dates, options = {})
       day_plans = get_time_slots_for_range(dates)
-      get_time_slots_from_plans(day_plans, filter_full)
+      get_time_slots_from_plans(day_plans, options)
     end
 
     #
     # Creates or gets existing ShipmentTimeSlot objects
     #
     # @param [ShipmentTimeSlotDayPlan] plans Day plans
-    # @param [bool] filter_full Filter time slots which reached their order limit
-    #
+    # @param [Hash] options Options hash can optionally contain
+    # filter_full (default: true) to filter full time slots
+    # filter_past (:default: true) to filter past time slots
+    # filter_past_by (default: ending_at) to filter past time slots by a specified attribute
     # @return [<type>] <description>
     # 
-    def self.get_time_slots_from_plans(plans, filter_full = true)
+    def self.get_time_slots_from_plans(plans, options = {})
+
+      # set default options
+      options[:filter_full] = true if options[:filter_full].nil?
+      options[:filter_past] = true if options[:filter_past].nil?
+      options[:filter_past_by] = :ending_at if options[:filter_past_by].nil?
+
       time_slots = []
 
       # Iterate over the day plans
       plans.each do |date, day_plan|
-
+        
         # Iterate over each single plan
         day_plan.shipment_time_slot_single_plans.each do |single_plan|
 
           # Get the time slot object from the single plan
           time_slot = single_plan.get_or_build_time_slot(date)
-
-          # Filter full time slots
-          time_slots << time_slot unless filter_full && time_slot.full?
+          
+          # Filter full time slots and past
+          unless (options[:filter_full] == true && time_slot.full?) ||
+              (options[:filter_past] && time_slot.send(options[:filter_past_by]) < Time.zone.now)
+            time_slots << time_slot
+          end
 
         end
       end

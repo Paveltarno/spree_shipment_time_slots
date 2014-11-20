@@ -1,10 +1,12 @@
 <!-- insert_before "[data-hook='buttons']" -->
-<h4 class="shipment-time-slot" data-hook="shipment-time-slot">
-  <%= Spree.t(:shipment_time) %>
-</h4>
-<%= form.fields_for :shipments do |ship_form| %>
-  <%= ship_form.collection_select( :shipment_time_slot_id,
-   Spree::TimeSlotPlanner.get_time_slots_for_next(Spree::ShipmentTimeSlotsConfiguration.user_day_limit),
-    :id , :user_string) %>
+<% time_slots = Spree::TimeSlotPlanner.get_time_slots_for_next(Spree::ShipmentTimeSlotsConfiguration.user_day_limit) %>
+
+<% if time_slots && !time_slots.empty? %>
+  <h4 class="shipment-time-slot" data-hook="shipment-time-slot">
+    <%= Spree.t(:shipment_time) %>
+  </h4>
+  <%= form.fields_for :shipments do |ship_form| %>
+    <%= ship_form.collection_select( :shipment_time_slot_id, time_slots, :id , :user_string) %>
+  <% end %>
+  <hr />
 <% end %>
-<hr />

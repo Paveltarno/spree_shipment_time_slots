@@ -17,7 +17,7 @@
 
       <div class="align-center">
         <% if date.month == @date.month %>
-          <b> <%= Spree.t(:time_slot_day_plan) + ":" %></b>
+          <b> <%= Spree.t(:time_slot_day_plan) + ":" %></b><br />
             <% curr_plan = @plan_set.custom_plans_by_date[date] %>
             <%= f.fields_for "custom_plans[#{date}]", curr_plan do |ff| %>
               <% day_plans = Spree::TimeSlotDayPlan.all %>

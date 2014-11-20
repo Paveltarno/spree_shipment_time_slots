@@ -115,40 +115,73 @@ describe Spree::TimeSlotPlanner do
           time_slot_day_plan: create(:time_slot_day_plan, name:"custom"))
       end
 
-      it "should return time slots" do
-        result = subject.get_time_slots_for_next(2)
+      it "should return time slots without filter" do
+        result = subject.get_time_slots_for_next(2, { filter_full: false, filter_past: false })
         expect(result.length).to eq 3
         result.each do |i|
           expect(i.class).to eq Spree::ShipmentTimeSlot
         end
       end
 
-      it "should filter full time slots" do
+      it "should filter full time slots by default" do
         time_slot = create(:shipment_time_slot, order_limit: 1)
         time_slot.shipments << create(:shipment)
         time_slot.save!
         full_plan = Spree::CustomPlan.create!(date: Date.today,
           time_slot_day_plan: create(:time_slot_day_plan, name:"custom2"))
 
-        result = subject.get_time_slots_for_next(2)
+        result = subject.get_time_slots_for_next(2, { filter_past: false })
         expect(result.length).to eq 2
         result.each do |i|
           expect(i.class).to eq Spree::ShipmentTimeSlot
         end
       end
 
-      it "should not filter full time slots if specified" do
+      it "should filter past time slots by default" do
         time_slot = create(:shipment_time_slot, order_limit: 1)
         time_slot.shipments << create(:shipment)
         time_slot.save!
-        full_plan = Spree::CustomPlan.create!(date: Date.today,
+        full_plan = Spree::CustomPlan.create!(date: Date.today + 2.day,
           time_slot_day_plan: create(:time_slot_day_plan, name:"custom2"))
 
-        result = subject.get_time_slots_for_next(2, false)
+        Timecop.freeze(Date.today.end_of_day - 1.hour) do
+          result = subject.get_time_slots_for_next(2, { filter_full: false })
+          expect(result.length).to eq 2
+          result.each do |i|
+            expect(i.class).to eq Spree::ShipmentTimeSlot
+          end
+        end
+      end
 
-        expect(result.length).to eq 3
-        result.each do |i|
-          expect(i.class).to eq Spree::ShipmentTimeSlot
+      it "should filter past time slots by ending_at" do
+        time_slot = create(:shipment_time_slot, order_limit: 1)
+        time_slot.shipments << create(:shipment)
+        time_slot.save!
+        full_plan = Spree::CustomPlan.create!(date: Date.today + 2.day,
+          time_slot_day_plan: create(:time_slot_day_plan, name:"custom2"))
+
+        Timecop.freeze(Date.today.beginning_of_day + 6.hour) do
+          result = subject.get_time_slots_for_next(2, { filter_full: false })
+          expect(result.length).to eq 3
+          result.each do |i|
+            expect(i.class).to eq Spree::ShipmentTimeSlot
+          end
+        end
+      end
+
+      it "should filter past time slots by starting_at as params" do
+        time_slot = create(:shipment_time_slot, order_limit: 1)
+        time_slot.shipments << create(:shipment)
+        time_slot.save!
+        full_plan = Spree::CustomPlan.create!(date: Date.today + 2.day,
+          time_slot_day_plan: create(:time_slot_day_plan, name:"custom2"))
+
+        Timecop.freeze(Date.today.beginning_of_day + 6.hour) do
+          result = subject.get_time_slots_for_next(2, { filter_full: false, filter_past_by: :starting_at })
+          expect(result.length).to eq 2
+          result.each do |i|
+            expect(i.class).to eq Spree::ShipmentTimeSlot
+          end
         end
       end
 

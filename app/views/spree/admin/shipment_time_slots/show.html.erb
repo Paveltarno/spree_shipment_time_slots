@@ -1,0 +1,67 @@
+<% content_for :page_title do %>
+  <%= "#{Spree.t("orders_for_shipment_on")}: #{@shipment_time_slot.admin_string} #{Spree.t(:out_of)} #{@shipment_time_slot.order_limit}" %>
+<% end %>
+
+<%= render :partial => 'spree/admin/shared/shipment_time_slot_sub_menu' %>
+
+<% content_for :page_actions do %>
+  <li><%= button_link_to Spree.t(:back_to_shipments_schedule), session[:return_to] || admin_shipment_time_slots_url, :icon => 'arrow-left' %></li>
+<% end %>
+
+<% if @orders.any? %>
+  <table class="index responsive" id="listing_orders" data-hook>
+    <colgroup>
+       <col style="width: 13%;">
+       <col style="width: 10%;">
+       <col style="width: 10%;">
+       <col style="width: 12%;">
+       <% if Spree::Order.checkout_step_names.include?(:delivery) %>
+         <col style="width: 12%;">
+       <% end %>
+       <col style="width: 25%;">
+       <col style="width: 10%;">
+       <col style="width: 8%;">
+    </colgroup>
+    <thead>
+      <tr data-hook="admin_orders_index_headers">
+        <% if @show_only_completed %>
+          <th><%= sort_link @search, :completed_at, I18n.t(:completed_at, :scope => 'activerecord.attributes.spree/order') %></th>
+        <% else %>
+          <th><%= sort_link @search, :created_at,   I18n.t(:created_at, :scope => 'activerecord.attributes.spree/order') %></th>
+        <% end %>
+        <th><%= sort_link @search, :number,         I18n.t(:number, :scope => 'activerecord.attributes.spree/order') %></th>
+        <th><%= sort_link @search, :state,          I18n.t(:state, :scope => 'activerecord.attributes.spree/order') %></th>
+        <th><%= sort_link @search, :payment_state,  I18n.t(:payment_state, :scope => 'activerecord.attributes.spree/order') %></th>
+         <% if Spree::Order.checkout_step_names.include?(:delivery) %>
+          <th><%= sort_link @search, :shipment_state, I18n.t(:shipment_state, :scope => 'activerecord.attributes.spree/order') %></th>
+         <% end %>
+        <th><%= sort_link @search, :email,          I18n.t(:email, :scope => 'activerecord.attributes.spree/order') %></th>
+        <th><%= sort_link @search, :total,          I18n.t(:total, :scope => 'activerecord.attributes.spree/order') %></th>
+        <th data-hook="admin_orders_index_header_actions" class="actions"></th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @orders.each do |order| %>
+      <tr data-hook="admin_orders_index_rows" class="state-<%= order.state.downcase %> <%= cycle('odd', 'even') %>">
+        <td class="align-center"><%= l (@show_only_completed ? order.completed_at : order.created_at).to_date %></td>
+        <td class="align-center"><%= link_to order.number, edit_admin_order_path(order) %></td>
+        <td class="align-center"><span class="state <%= order.state.downcase %>"><%= Spree.t("order_state.#{order.state.downcase}") %></span></td>
+        <td class="align-center"><span class="state <%= order.payment_state %>"><%= link_to Spree.t("payment_states.#{order.payment_state}"), admin_order_payments_path(order) if order.payment_state %></span></td>
+          <% if Spree::Order.checkout_step_names.include?(:delivery) %>
+            <td class="align-center"><span class="state <%= order.shipment_state %>"><%= Spree.t("shipment_states.#{order.shipment_state}") if order.shipment_state %></span></td>
+          <% end %>
+        <td><%= mail_to order.email %></td>
+        <td class="align-center"><%= order.display_total.to_html %></td>
+        <td class='actions align-center' data-hook="admin_orders_index_row_actions">
+          <%= link_to_edit_url edit_admin_order_path(order), :title => "admin_edit_#{dom_id(order)}", :no_text => true %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="alpha twelve columns no-objects-found">
+    <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.spree/order')) %>,
+    <%= link_to Spree.t(:add_one), spree.new_admin_order_path %>!
+  </div>
+<% end %>

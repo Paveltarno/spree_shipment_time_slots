@@ -22,11 +22,12 @@ he:
     admin:
       tab:
         time_slots_planner: ניהול משלוחים
-        shipment_time_slots: זמינות משלוחים
+        shipment_time_slots: לו״ז משלוחים
         time_slot_day_plans: תוכניות יומיות
         weekly_plan: תכנון שבועי
         custom_plans: תוכניות מיוחדות
     shipment_time: זמן משלוח
+    shipments_schedule: לו״ז משלוחים
     custom_plans: תוכניות מיוחדות
     weekly_plan: תכנון שבועי
     weekly_plan_successfully_updated: תוכנית שבועית עודכנה בהצלחה
@@ -39,6 +40,7 @@ he:
     starting_hour: שעת התחלה
     ending_hour: שעת סיום
     order_limit: מכסת הזמנות
+    out_of: מתוך
     sunday: ראשון
     monday: שני
     tuesday: שלישי
@@ -63,3 +65,6 @@ he:
     should_be_g_then_starting_hour: לא יכולה להיות קטנה או שווה לשעת ההתחלה
     should_be_l_then_ending_hour: לא יכולה להיות גדולה או שווה לשעת הסיום
     editing_time_slot_day_plan: עריכת תוכנית יומית
+    orders_for_shipment_on: הזמנות למשלוח ב
+    back_to_shipments_schedule: חזרה ללו״ז משלוחים
+    no_shipment_time_slot_selected: לא נבחר זמן משלוח.

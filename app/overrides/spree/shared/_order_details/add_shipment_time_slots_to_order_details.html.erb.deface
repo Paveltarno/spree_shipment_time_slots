@@ -1,2 +1,2 @@
 <!-- insert_after ".delivery div" -->
-<%= shipment.shipment_time_slot.user_string %>
+<%= shipment.shipment_time_slot.user_string if shipment.shipment_time_slot %>

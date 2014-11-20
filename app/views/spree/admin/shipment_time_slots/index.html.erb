@@ -1,5 +1,5 @@
 <% content_for :page_title do %>
-  <%= Spree.t(:shipment_time_slots) %>
+  <%= Spree.t(:shipments_schedule) %>
 <% end %>
 
 <%= render :partial => 'spree/admin/shared/shipment_time_slot_sub_menu' %>
@@ -12,5 +12,19 @@
   </h2>
   <%= calendar @date do |date| %>
     <%= date.day %>
+    <ul>
+      <% time_slots_for_day = @shipment_time_slots[date.beginning_of_day] %>
+        <% if time_slots_for_day %>
+          <% time_slots_for_day.each do |time_slot| %>
+          <li>
+            <%= link_to admin_shipment_time_slot_path(time_slot) do %>
+               <%= time_slot.hours_string %>
+               <br />
+               <%= time_slot.shipments_string %>
+            <% end %>
+          </li>
+          <% end %>
+      <% end %>
+    </ul>
   <% end %>
 </div>

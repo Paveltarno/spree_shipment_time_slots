@@ -1,0 +1,49 @@
+// Shipments AJAX API extensions
+$(document).ready(function () {
+  'use strict';
+
+  var toggleTimeSlotEdit = function(event) {
+    event.preventDefault();
+
+    var link = $(this);
+    link.parents('tbody').find('tr.edit-timeslot').toggle();
+    link.parents('tbody').find('tr.show-timeslot').toggle();
+  }
+
+  // Handle time_slot edit
+  $('a.edit-timeslot').click(toggleTimeSlotEdit)
+  $('a.cancel-timeslot').click(toggleTimeSlotEdit)
+
+  // Handle time_slot save
+  $('[data-hook=admin_shipment_form] a.save-timeslot').on('click', function (event) {
+    event.preventDefault();
+
+    var link = $(this);
+    var shipment_number = link.data('shipment-number');
+    var shipment_time_slot_id = link.parents('tbody').find('select#selected_shipment_time_slot_id').val();
+    var url = Spree.url(Spree.routes.shipments_api + '/' + shipment_number + '.json');
+
+    $.ajax({
+      type: 'PUT',
+      url: url,
+      data: {
+        shipment: {
+          shipment_time_slot_id: shipment_time_slot_id
+        }
+      }
+    }).done(function (data) {
+      link.parents('tbody').find('tr.edit-timeslot').toggle();
+Spree.pathFor('admin/shipmnet_time_slots')
+      var show = link.parents('tbody').find('tr.show-timeslot');
+      
+      show.toggle();
+      if (data.shipment_time_slot){
+        var timeslot = data.shipment_time_slot
+        show.find('.timeslot-value')
+          .html($("<strong>")
+            .html("<a href=\"" + Spree.pathFor("admin/shipment_time_slots") +
+               "/" + timeslot.id + "\">" + timeslot.admin_string + "</a>"));
+      }
+    });
+  });
+});

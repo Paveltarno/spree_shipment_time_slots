@@ -9,7 +9,7 @@
 
     <%= week_calendar do |day| %>
       <div class="align-center">
-        <b> <%= Spree.t(:time_slot_day_plan) + ":" %><b>
+        <b> <%= Spree.t(:time_slot_day_plan) + ":" %><b><br />
         <%= fields_for "regular_plans[]", @regular_plans[day] do |ff| %>
           <%= ff.collection_select( :time_slot_day_plan_id, Spree::TimeSlotDayPlan.all, :id, :name, {include_blank: Spree.t(:empty) } ) %>
         <% end %>

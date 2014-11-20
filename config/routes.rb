@@ -1,6 +1,6 @@
 Spree::Core::Engine.routes.draw do
   namespace :admin do
-    resources :shipment_time_slots
+    resources :shipment_time_slots, only: [:index, :show]
     resources :time_slot_day_plans
 
     # CustomPlanSets
