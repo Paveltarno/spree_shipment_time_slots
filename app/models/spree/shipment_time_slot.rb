@@ -16,7 +16,7 @@ module Spree
 
     scope :not_empty, -> { where("shipments_count > ?", 0) }
     scope :same_month_as, -> (date) { where("starting_at >= ? and starting_at <= ?",
-     date.beginning_of_month, date.end_of_month) }
+     date.beginning_of_month.beginning_of_day, date.end_of_month.end_of_day) }
 
     def self.orders_for(shipment_time_slot_id = Spree::ShipmentTimeSlot.select(:id).all)
       Spree::Order.

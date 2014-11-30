@@ -1,8 +1,6 @@
 module Spree
   module Admin
     class CustomPlanSetsController < Spree::Admin::BaseController
-
-      helper Spree::Admin::CalendarHelper
       
       def edit
         @date = params[:date] ? Date.parse(params[:date]) : Date.today

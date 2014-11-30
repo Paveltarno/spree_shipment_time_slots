@@ -12,7 +12,7 @@ describe Spree::ShipmentTimeSlot do
   it{ should respond_to(:shipments) }
 
   context "scopes" do
-    context ".not_empty" do
+    context ".same_month_as" do
       before do
         @timeslot.order_limit.times do
           order = create(:order)
@@ -20,17 +20,17 @@ describe Spree::ShipmentTimeSlot do
         end
 
         @timeslot.reload
-        create(:shipment_time_slot,starting_at: 1.year.from_now, ending_at: 1.year.from_now + 2.hours)
+        create(:shipment_time_slot,starting_at: 1.year.from_now.beginning_of_month, ending_at: 1.year.from_now.beginning_of_month + 2.hours)
 
       end
 
-      it "should return only the ones with orders" do
+      it "should return only the ones in the same year" do
         expect(Spree::ShipmentTimeSlot.count).to eq 2
         expect(Spree::ShipmentTimeSlot.same_month_as(Date.today).count).to eq 1
       end
     end
 
-    context ".same_month_as" do
+    context ".not_empty" do
       before do
         @timeslot.order_limit.times do
           order = create(:order)
