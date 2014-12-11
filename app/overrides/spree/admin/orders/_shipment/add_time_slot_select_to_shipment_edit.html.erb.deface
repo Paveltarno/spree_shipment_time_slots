@@ -1,4 +1,28 @@
 <!-- insert_bottom 'tbody' -->
+<% unless shipment.shipped? %>
+  <tr class="edit-timeslot hidden">
+    <td colspan="5">
+      <div class="field">
+        <%= label_tag 'selected_shipment_time_slot_d', Spree.t(:shipment_time) %>
+        <% planned_time_slots = Spree::TimeSlotPlanner.get_time_slots_for_next(Spree::ShipmentTimeSlotsConfiguration.admin_day_limit) %>
+
+        <% # If a time slot already exists and it was filtered. Add it to the top of the list %>
+        <% planned_time_slots = planned_time_slots.unshift(shipment.shipment_time_slot) if shipment.shipment_time_slot && !planned_time_slots.include?(shipment.shipment_time_slot) %>
+
+        <%= select_tag :selected_shipment_time_slot_id,
+              options_for_select(planned_time_slots.map { |ts| ["#{ts.admin_string}", ts.id] }, shipment.shipment_time_slot),{ :class => 'select2 fullwidth', :data => {'shipment-number' => shipment.number }} %>
+      </div>
+    </td>
+    <td class="actions">
+      <% if can? :update, shipment %>
+        <%= link_to '', '#', :class => 'save-timeslot fa fa-ok no-text with-tip',
+          :data => {'shipment-number' => shipment.number, :action => 'save'}, title: Spree.t('actions.save') %>
+        <%= link_to '', '#', :class => 'cancel-timeslot fa fa-cancel no-text with-tip',
+          :data => {:action => 'cancel'}, :title => Spree.t('actions.cancel') %>
+      <% end %>
+    </td>
+  </tr>
+<% end %>
 
 <tr class="show-timeslot">
   
