@@ -9,8 +9,6 @@
         <% # If a time slot already exists and it was filtered. Add it to the top of the list %>
         <% planned_time_slots = planned_time_slots.unshift(shipment.shipment_time_slot) if shipment.shipment_time_slot && !planned_time_slots.include?(shipment.shipment_time_slot) %>
 
-        <%= select_tag :selected_shipment_time_slot_id,
-              options_for_select(planned_time_slots.map { |ts| ["#{ts.admin_string}", ts.id] }, shipment.shipment_time_slot),{ :class => 'select2 fullwidth', :data => {'shipment-number' => shipment.number }} %>
       </div>
     </td>
     <td class="actions">
