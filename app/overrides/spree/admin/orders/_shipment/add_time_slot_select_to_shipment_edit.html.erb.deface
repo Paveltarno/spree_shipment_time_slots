@@ -6,6 +6,11 @@
         <%= label_tag 'selected_shipment_time_slot_d', Spree.t(:shipment_time) %>
         <% planned_time_slots = Spree::TimeSlotPlanner.get_time_slots_for_next(Spree::ShipmentTimeSlotsConfiguration.admin_day_limit) %>
 
+        <%= select_tag :selected_shipment_time_slot_id,
+              options_for_select(planned_time_slots
+                .map { |ts| ["#{ts.admin_string}", ts.id] }, shipment.shipment_time_slot),
+              { :class => 'select2 fullwidth',
+                  :data => {'shipment-number' => shipment.number }} %>
       </div>
     </td>
     <td class="actions">
