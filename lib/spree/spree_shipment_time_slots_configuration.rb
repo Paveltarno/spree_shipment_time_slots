@@ -3,7 +3,7 @@ module Spree
 
     # This preference sets the day range to send to the TimeSlotsPlanner on the frontend
     # (i.e 1 equals today and tomorrow)
-    preference :user_day_limit, :integer, default: 2
-    preference :admin_day_limit, :integer, default: 6
+    preference :user_day_limit, :integer, default: 7
+    preference :admin_day_limit, :integer, default: 7
   end
 end
