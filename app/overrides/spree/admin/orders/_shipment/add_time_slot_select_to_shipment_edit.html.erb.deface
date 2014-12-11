@@ -6,6 +6,10 @@
         <%= label_tag 'selected_shipment_time_slot_d', Spree.t(:shipment_time) %>
         <% planned_time_slots = Spree::TimeSlotPlanner.get_time_slots_for_next(Spree::ShipmentTimeSlotsConfiguration.admin_day_limit) %>
 
+        <% if shipment.shipment_time_slot && !planned_time_slots.include?(shipment.shipment_time_slot) %>
+
+        <% end %>
+
         <%= select_tag :selected_shipment_time_slot_id,
               options_for_select(planned_time_slots
                 .map { |ts| ["#{ts.admin_string}", ts.id] }, shipment.shipment_time_slot),
