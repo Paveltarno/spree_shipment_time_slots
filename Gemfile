@@ -1,4 +1,6 @@
 source 'https://rubygems.org'
+ruby '2.1.5'
+#ruby-gemset=spree-2.4
 
 gem 'spree', :git => 'https://github.com/Paveltarno/spree.git', :branch => '2-4-stable'
 # Provides basic authentication functionality for testing parts of your engine
