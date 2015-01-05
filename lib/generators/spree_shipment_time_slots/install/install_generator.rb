@@ -20,7 +20,7 @@ module SpreeShipmentTimeSlots
       end
 
       def add_seed
-        append_file 'db/seeds.rb', "SpreeShipmentTimeSlots::Engine.load_seed if defined?(SpreeDoorstepManager)\n"
+        append_file 'db/seeds.rb', "SpreeShipmentTimeSlots::Engine.load_seed if defined?(SpreeShipmentTimeSlots)\n"
       end
 
       def add_migrations
