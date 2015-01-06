@@ -1,5 +1,5 @@
 # Add any initialization for spree_shipment_time_slots extension here
-# This file should be modified outside of the extension code because it
+# This file should not be modified outside of the extension code because it
 # is copied upon extension install and deleted on remove
 # -------------------------------------------------------------------
 
