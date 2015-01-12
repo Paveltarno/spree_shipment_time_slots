@@ -3,6 +3,7 @@ require 'spec_helper'
 describe Spree::TimeSlotPlanner do
 
   before do
+    Spree::ShipmentTimeSlotsConfiguration.handling_buffer = 0
     for i in (6).downto(0)
       Spree::RegularPlan.create!(day: i, time_slot_day_plan: create(:time_slot_day_plan))
     end
@@ -178,6 +179,22 @@ describe Spree::TimeSlotPlanner do
 
         Timecop.freeze(Date.today.beginning_of_day + 6.hour) do
           result = subject.get_time_slots_for_next(2, { filter_full: false, filter_past_by: :starting_at })
+          expect(result.length).to eq 2
+          result.each do |i|
+            expect(i.class).to eq Spree::ShipmentTimeSlot
+          end
+        end
+      end
+
+      it "should filter past times with a handling buffer" do
+        time_slot = create(:shipment_time_slot)
+        time_slot.shipments << create(:shipment)
+        time_slot.save!
+        full_plan = Spree::CustomPlan.create!(date: Date.today + 2.day,
+          time_slot_day_plan: create(:time_slot_day_plan, name:"custom2"))
+
+        Timecop.freeze(Date.today.beginning_of_day + 6.hour) do
+          result = subject.get_time_slots_for_next(2, handling_buffer: 3.hours)
           expect(result.length).to eq 2
           result.each do |i|
             expect(i.class).to eq Spree::ShipmentTimeSlot

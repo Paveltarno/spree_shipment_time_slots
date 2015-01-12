@@ -1,0 +1,27 @@
+<%= render 'spree/admin/shared/configuration_menu' %>
+
+<% content_for :page_title do %>
+   <%= Spree.t(:shipment_time_slots_settings) %>
+<% end %>
+
+<%= form_tag admin_shipment_time_slots_settings_path, method: :put do %>
+  <div id="preferences" data-hook>
+
+    <fieldset class="general no-border-top">
+      <% @settings.each do |key| %>
+        <% type = Spree::ShipmentTimeSlotsConfiguration.preference_type(key) %>
+        <div class="field">
+          <%= label_tag(key, Spree.t(key)) + tag(:br) if type != :boolean %>
+          <%= preference_field_tag(key, Spree::ShipmentTimeSlotsConfiguration[key], :type => type) %>
+          <%= label_tag(key, Spree.t(key)) + tag(:br) if type == :boolean %>
+        </div>
+      <% end %>
+    </fieldset>
+  </div>
+
+  <div class="form-buttons filter-actions actions" data-hook="buttons">
+    <%= button Spree.t('actions.update'), 'refresh' %>
+  <span class="or"><%= Spree.t(:or) %></span>
+    <%= link_to_with_icon 'remove', Spree.t('actions.cancel'), edit_admin_shipment_time_slots_settings_path, :class => 'button' %>
+  </div>
+<% end %>

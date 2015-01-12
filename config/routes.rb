@@ -2,6 +2,7 @@ Spree::Core::Engine.routes.draw do
   namespace :admin do
     resources :shipment_time_slots, only: [:index, :show]
     resources :time_slot_day_plans
+    resource :shipment_time_slots_settings, only: [:edit, :update]
 
     # CustomPlanSets
     get '/custom_plans' => 'custom_plan_sets#edit'

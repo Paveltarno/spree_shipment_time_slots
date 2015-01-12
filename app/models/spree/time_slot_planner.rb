@@ -43,7 +43,8 @@ module Spree
 
       # If there are any regular plans (should be from seed but we cant rely on that)
       if regular_plans.count > 0
-        # Create a hash will all the dates as keys and all the regular plans
+
+        # Create a hash with all the dates as keys and all the regular plans
         # as their values
         day_plans = dates.inject({}) do |hash, date|
 
@@ -93,12 +94,15 @@ module Spree
     # @return [<type>] <description>
     # 
     def self.get_time_slots_from_plans(plans, options = {})
-
+      
       # set default options
-      options[:filter_full] = true if options[:filter_full].nil?
-      options[:filter_past] = true if options[:filter_past].nil?
-      options[:filter_past_by] = :ending_at if options[:filter_past_by].nil?
+      defaults = { 
+        filter_full: true,
+        filter_past: true,
+        filter_past_by: :ending_at,
+        handling_buffer: ShipmentTimeSlotsConfiguration.handling_buffer }
 
+      options = defaults.merge!(options)
       time_slots = []
 
       # Iterate over the day plans
@@ -109,10 +113,10 @@ module Spree
 
           # Get the time slot object from the single plan
           time_slot = single_plan.get_or_build_time_slot(date)
-          
+
           # Filter full time slots and past
           unless (options[:filter_full] == true && time_slot.full?) ||
-              (options[:filter_past] && time_slot.send(options[:filter_past_by]) < Time.zone.now)
+              (options[:filter_past] && time_slot.send(options[:filter_past_by]) < (Time.zone.now + options[:handling_buffer]))
             time_slots << time_slot
           end
 
