@@ -7,7 +7,7 @@ This extension enables easy grouping for orders based on time slots.
 
 Motivation
 ----------
-Many stores deliver their orders on a daily basis (i.e grocery stores) and in large baches.
+Many stores deliver their orders on a daily basis (i.e grocery stores) and in large batches.
 Spree gives control over each individual shipment but assumes the shipping is done by external
 companies that ship each order to it's owner.
 Many stores deliver their goods in predefined shifts (i.e sunday 10am - 2pm, sunday 4pm - 6p, monday 11am - 7pm), spree_shipment_time_slots extension allows planning of these shifts and predefines shipment_time_slot objects which can then be selected by the end-user upon checkout.
